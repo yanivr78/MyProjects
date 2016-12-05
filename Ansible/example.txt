@@ -1,0 +1,11 @@
+# Common :
+sudo ansible-playbook common_main.yml --vault-password-file= <pass file> -i production
+
+# Frontend 
+sudo ansible-playbook frontend_main.yml -i production --extra-vars "version=4.1.4.RELEASE"
+
+# Backend
+sudo ansible-playbook backend_main.yml -i production --extra-vars "version=4.1.4.RELEASE-1168"
+
+# Vault
+sudo ansible-vault edit roles/mariadb/vars/vaulted.yml

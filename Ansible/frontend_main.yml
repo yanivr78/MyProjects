@@ -1,0 +1,9 @@
+---
+# This playbook installes NGINX, PHP-FPM , and deploy the required build
+
+- name: Frontend installation role
+  hosts: frontend1
+  become: yes
+  roles:
+    - common
+    - frontend

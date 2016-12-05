@@ -1,0 +1,120 @@
+---
+  - include_vars: vaulted.yml
+    tags:
+      - test
+
+  - name: Set MySQL repo
+    copy: src=galera.repo dest=/etc/yum.repos.d/galera.repo mode=644
+
+  - name: remove mariadb conflicts
+    yum: name=mariadb-libs state=absent
+
+  - name: enable repo and install galera and mysql
+    command:  sudo yum --enablerepo=galera -y install galera-3 mysql-wsrep-5.6
+
+  - name: Install mysql add-ons (mysql-pyhon, php-mysql, php-pear)
+    yum: pkg={{ item }} state=present
+    with_items:
+      - MySQL-python
+      - php-mysql
+      - php-pear
+
+  - name: copy config file to servers
+    template: src=my-cnf.j2 dest=/etc/my.cnf owner=root mode=644
+    tags:
+      - test
+
+  - name: make master run sudo /usr/bin/mysqld_safe --wsrep-new-cluster on startup
+    lineinfile: dest=/etc/rc.d/rc.local line="/usr/bin/mysqld_safe --wsrep-new-cluster"
+    when: (ansible_all_ipv4_addresses[0]) == '{{ mysql_master }}'
+    tags:
+      - test
+
+# Continue with the following :
+#   1. On the master and slaves run :
+#  sudo /usr/bin/mysqld_safe --skip-grant-tables
+#  mysql -uroot --execute "update mysql.user set password=password('<PASSWORD>') where user='<USER>';"
+#  mysql -uroot --execute="update mysql.user SET PASSWORD = PASSWORD('<PASSWORD>');"
+#  mysql -uroot --execute="update mysql.user set host='%' where user='<USER>' and host='%';"
+#  mysql -uroot --execute="grant all privileges to '<USER>'@'%' identified by 'password';
+#  In a case of where root wont have grant access rights :
+# start the server with : sudo /usr/bin/mysqld_safe --skip-grant-tables &
+# mysql -uroot --execute "update mysql.user set password=password('<PASSWORD>') where user='<USER>';"
+# mysql -uroot --exectute="update mysql.user SET PASSWORD = PASSWORD('<PASSWORD>);"
+# mysql -uroot --execute="update mysql.user set host='%' where user='<USER>' and host='%';"
+#
+# CREATE TABLE mysql.user_backup LIKE mysql.user;
+#
+# INSERT INTO mysql.user_backup SELECT * FROM mysql.user;
+#
+# ALTER TABLE mysql.user ADD COLUMN Create_tablespace_priv enum('N','Y') NOT NULL DEFAULT 'N' AFTER Trigger_Priv;
+#
+# ALTER TABLE mysql.user ADD COLUMN plugin char(64);
+#
+# ALTER TABLE mysql.user ADD COLUMN authentication_string text DEFAULT NULL;
+#
+# UPDATE mysql.user SET Select_priv='Y',Insert_priv='Y',Update_priv='Y',Delete_priv='Y', Create_priv='Y',Drop_priv='Y',Reload_priv='Y',Shutdown_priv='Y', Process_priv='Y',File_priv='Y',Grant_priv='Y',References_priv='Y', Index_priv='Y',Alter_priv='Y',Show_db_priv='Y',Super_priv='Y', Create_tmp_table_priv='Y',Lock_tables_priv='Y',Execute_priv='Y', Repl_slave_priv='Y',Repl_client_priv='Y',Create_view_priv='Y', Show_view_priv='Y',Create_routine_priv='Y',Alter_routine_priv='Y', Create_user_priv='Y',Event_priv='Y',Trigger_priv='Y', Create_tablespace_priv='Y' WHERE user='root';
+#
+# FLUSH PRIVILEGES;
+
+# if the above didn't work - then this Worked before :
+#   sudo mv /etc/my.cnf ~
+#   sudo /usr/bin/mysqld_safe --skip-grant-tables &
+#    mysql -uroot
+# FLUSH PRIVILEGES;
+# SET PASSWORD FOR root@'localhost' = PASSWORD('root');
+# UPDATE mysql.user SET Password=PASSWORD('root') WHERE User='root';
+# FLUSH PRIVILEGES;
+#
+#
+#   2. on the master -
+#      sudo /usr/bin/mysqld_safe --wsrep-new-cluster
+#   3. on the slaves :
+#      sudo systemctl mysql start
+#   4. check:
+#     show status like 'wsrep_%';
+
+#   5. copy mysql dump file (all databases) to mysql master
+#      scp all_tables.sql <master>:/template
+#
+#   6. import :
+#      mysql < all_tables.sql
+#   7. ONLY ON THE SLAVES !!! (the master uses /etc/rc.d/rc.local to autostart [/usr/bin/mysqld_safe --wsrep-new-cluster])
+#      sudo systemctl enable mysqld.service
+
+#  - name: start and enable galera-mysql-cluster service on slave
+#    service: name=mysql state=restarted enabled=yes
+#    when: (ansible_all_ipv4_addresses[0]) != '{{ master_mysql }}'
+#    tags:
+#      - test
+
+  #- name: Ceate systemd /etc/systemd/system/mysqld.service
+  #  copy: src=mysqld.service dest=/etc/systemd/system/mysqld.service mode=644
+  #  when: (ansible_all_ipv4_addresses[0]) != '10.0.103.46'
+  #  tags:
+  #    - test
+
+
+
+
+#  - name: restarting mysql's
+#    service: name=mysql state=started enabled=yes
+#    when: (ansible_all_ipv4_addresses[0]) == '{{ mysql_2 }}'
+
+#  - name: restarting mysql's
+#    service: name=mysql state=started enabled=yes
+    #when: (ansible_all_ipv4_addresses[0]) == '{{ mysql_2 }}'
+
+#  - name: configuring users on mysql # this can run only once since there's no root password yet...after this, a password will be set and it will fail
+#    mysql_user: name={{ mysql_user }} password={{ mysql_pass }} host="%" priv=*.*:ALL state=present
+#    tags:
+#      - test
+
+
+#  - name: upgrade all packages
+#    yum: name=* state=latest
+
+
+
+  #- name: Start sql service and enable the service
+  #  service: name=mysql state=started enabled=yes

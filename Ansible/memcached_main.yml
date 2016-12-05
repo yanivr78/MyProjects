@@ -1,0 +1,11 @@
+---
+# This playbook installes NGINX, PHP-FPM , and deploy the required build
+
+- name: MariaDB installation role
+  hosts: all_memcached
+  sudo: yes
+  roles:
+     - common
+    # - java
+    # - tomcat7
+     - memcached

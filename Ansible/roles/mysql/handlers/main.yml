@@ -1,0 +1,6 @@
+---
+- name: restart tomcat
+  service: name=tomcat state=restarted
+
+- name: tomcat port verifier
+  wait_for: port={{ http_port }}

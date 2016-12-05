@@ -1,0 +1,23 @@
+[mysqld]
+query_cache_size=0
+binlog_format=ROW
+default-storage-engine=innodb
+innodb_autoinc_lock_mode=2
+query_cache_type=0
+bind-address={{ (ansible_all_ipv4_addresses[0]) }}
+
+# Galera Provider Configuration
+wsrep_provider=/usr/lib64/galera/libgalera_smm.so
+#wsrep_provider_options="gcache.size=32G"
+
+# Galera Cluster Configuration
+wsrep_cluster_name="cluster"
+wsrep_cluster_address="gcomm://{{ mysql_1 }}, {{ mysql_2 }}"
+
+# Galera Synchronization Configuration
+wsrep_sst_method=rsync
+#wsrep_sst_auth=user:pass
+
+# Galera Node Configuration
+wsrep_node_address="{{ (ansible_all_ipv4_addresses[0]) }}"
+wsrep_node_name="server_{{ (ansible_all_ipv4_addresses[0]) }}""

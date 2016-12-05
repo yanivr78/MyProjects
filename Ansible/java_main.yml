@@ -1,0 +1,7 @@
+---
+# install and set java 8
+- name: Java installation role
+  hosts: backend3
+  sudo: yes
+  roles:
+    - java

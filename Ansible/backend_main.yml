@@ -1,0 +1,11 @@
+---
+#  Backends full install and deploy the required build
+
+- name: Backend installation role
+  hosts: all_backends
+  become: yes
+  roles:
+     - common
+     - java
+     - tomcat7
+     - backend

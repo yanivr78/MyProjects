@@ -1,0 +1,30 @@
+<?php defined('SYSPATH') or die('No direct script access.');
+
+return array(
+        'servers' => array(
+                'server1' => array(
+                        'host'     => '{{ rabbitmq1 }}',
+                        'port'     => '5672',
+                        'vhost'    => 'api',
+                        'login'    => '{{ rabbit_user }}',
+                        'password' => '{{ rabbit_pass }}',
+                        'amqp-proxy' => 'localhost:4017'
+                ),
+                'server2' => array(
+                        'host'     => '{{ rabbitmq2 }}',
+                        'port'     => '5672',
+                        'vhost'    => 'api',
+                        'login'    => '{{ rabbit_user }}',
+                        'password' => '{{ rabbit_pass }}',
+                        'amqp-proxy' => 'localhost:4027'
+                )
+        ),
+        'exchanges' => array(
+                'default' => array(
+                        'server' => 'server1',
+                ),
+                'api2' => array(
+                        'server' => 'server2',
+                ),
+        )
+);

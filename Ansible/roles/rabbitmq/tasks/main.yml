@@ -1,0 +1,45 @@
+---
+  - include_vars: vaulted.yml
+    tags:
+      - test
+
+  - name: Install RabbitMQ
+    command: sudo yum -y update
+
+  - name: Install erlang
+    yum: pkg={{ item }} state=present
+    with_items:
+      - erlang
+
+  - name: install rabbitmq from a remote repo
+    yum: name=https://www.rabbitmq.com/releases/rabbitmq-server/v3.5.6/rabbitmq-server-3.5.6-1.noarch.rpm state=present
+
+  - name: copy properties file into /etc/rabbitmq
+    copy: src=rabbitmq.config dest=/etc/rabbitmq/rabbitmq.config mode=644
+    tags:
+      - test
+
+  - name: run rabbitmq
+    service: name=rabbitmq-server state=started enabled=yes
+    tags:
+      - test
+
+  - name: creating rabbitmq user and allow access for /
+    rabbitmq_user: user={{ rabbit_user }} password={{ rabbit_pass }} vhost=/ configure_priv=.* read_priv=.* write_priv=.* state=present
+    tags:
+      - test
+  - name: creating rabbitmq user and allow access for /
+    rabbitmq_user: user={{ rabbit_user }} password={{ rabbit_pass }} vhost=api configure_priv=.* read_priv=.* write_priv=.* state=present
+    tags:
+      - test
+
+  - name: set user as administrator to allow gui access
+    command: sudo rabbitmqctl set_user_tags {{ rabbit_user }} administrator
+    tags:
+      - test
+
+
+  - name: enable rabbitmq_management
+    command: sudo rabbitmq-plugins enable rabbitmq_management
+    tags:
+      - test

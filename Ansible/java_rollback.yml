@@ -1,0 +1,15 @@
+---
+- hosts: backends
+  become: yes
+  tasks:
+
+  - name: Make Java available for system
+    command: 'alternatives --install "/usr/bin/java" "java" "/usr/java/jdk1.7.0_67/bin/java" 20000'
+
+  - name: Correct java version selected for a CentOS based OS
+    alternatives: name=java path=/usr/java/jdk1.7.0_67/bin/java
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Amazon'
+
+  - name: Set Java 8 as default for a Debian based OS
+    alternatives: name=java path=/usr/java/jdk1.7.0_67/bin/java
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'

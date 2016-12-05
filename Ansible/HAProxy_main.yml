@@ -1,0 +1,9 @@
+---
+# This playbook installes NGINX, PHP-FPM , and deploy the required build
+
+- name: HAProxy installation role
+  hosts: haproxy
+  become: yes
+  roles:
+    - common
+    - HAProxy

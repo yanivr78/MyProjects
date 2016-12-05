@@ -1,0 +1,11 @@
+---
+# Prerequists for ubuntu/debian
+
+  - name: Install memcached
+    yum: name=memcached state=installed
+
+  - name: copy the memcache configure to the servers
+    copy: src=memcached.conf dest=/etc/sysconfig/memcached mode=644
+
+  - name: start memcached service
+    service: name=memcached state=started enabled=yes

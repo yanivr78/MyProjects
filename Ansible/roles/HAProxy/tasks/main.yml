@@ -1,0 +1,42 @@
+---
+
+  - name: copy dhclient-eth0.conf to /etc/dhcp (to fix MTU to 1500)
+    copy: src=dhclient-eth0.conf dest=/etc/dhcp/
+    register: mtu
+
+  - name: restart network
+    service: name=network state=restarted
+    when: mtu.changed
+
+  - name: configure rsyslog for haproxy to be able to send logs
+    copy: src=rsyslog.conf dest=/etc/
+
+  - name: configure rsyslog for haproxy to be able to send logs part 2
+    copy: src=rsyslog.conf dest=/etc/
+
+  - name: restart rsyslog
+    service: name=rsyslog state=restarted enabled=yes
+
+  - name: install haproxy
+    yum: name=haproxy state=present
+
+  - name: configure external haproxy
+    template: src=haproxy.external.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+    when: (ansible_all_ipv4_addresses[0]) == '10.0.14.228'
+
+  - name: configure external haproxy
+    template: src=haproxy.external.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+    when: (ansible_all_ipv4_addresses[0]) == '10.0.15.228'
+
+  - name: configure internal haproxy
+    template: src=haproxy.internal.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+    when: (ansible_all_ipv4_addresses[0]) == '10.0.14.100'
+
+  - name: configure internal haproxy
+    template: src=haproxy.internal.cfg.j2 dest=/etc/haproxy/haproxy.cfg
+    when: (ansible_all_ipv4_addresses[0]) == '10.0.15.100'
+
+  - debug: msg="This is the var {{ ansible_all_ipv4_addresses }}"
+
+  - name: start haproxy
+    service: name=haproxy state=running enabled=yes

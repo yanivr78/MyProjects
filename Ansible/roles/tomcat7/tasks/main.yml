@@ -1,0 +1,44 @@
+---
+
+  - name: add group "tomcat"
+    group: name=tomcat
+
+  - name: add user "tomcat"
+    user: name=tomcat group=tomcat home=/usr/share/tomcat createhome=no
+    ignore_errors: yes
+
+  - name: Download Tomcat
+    get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.34/bin/apache-tomcat-7.0.34.tar.gz dest=/opt/
+
+#  - name: ensure that /opt/tomcat
+#    file: path=/opt/tomcat/ state=directory mode=0644
+
+  - name: Extract archive
+    unarchive: src=/opt/apache-tomcat-7.0.34.tar.gz dest=/opt/ copy=no
+    #command: chdir=/usr/share /bin/tar xvf  -C /opt/ creates=/opt/apache-tomcat-7.0.34
+
+  - name: delete tomcat tar
+    file: state=absent path={{ src_tomcat }}
+
+  - name: Symlink install directory
+    file: src=/opt/apache-tomcat-7.0.34/ path=/usr/share/tomcat state=link
+
+  - name: Change ownership of Tomcat installation
+    file: path=/usr/share/tomcat/ owner=tomcat group=tomcat state=directory recurse=yes
+
+  - name: Configure Tomcat server
+    file: src=server.xml dest=/usr/share/tomcat/conf/
+    notify: restart tomcat
+
+  - name: Install Tomcat init script
+    copy: src=tomcat dest=/etc/init.d/tomcat mode=0755 backup=yes
+
+  - name: Ensure jmxterm is available
+    copy: src=jmxterm-1.0-alpha-4-uber.jar dest=/usr/local/lib/
+
+  - name: remove tomcat7 from cron.daily (we manage it by ourselfs)
+    file: path=/etc/cron.daily/tomcat7 state=absent
+
+  - name: Start Tomcat
+    service: name=tomcat state=started enabled=yes
+    notify: tomcat port verifier

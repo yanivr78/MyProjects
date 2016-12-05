@@ -1,0 +1,40 @@
+---
+  - include_vars: vaulted.yml
+
+  - name: install aws-cli (debian based)
+    apt: name=awscli state=present
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: Install General Required Packages
+    yum: name={{ item }} state=installed
+    with_items:
+    - python
+    - python-pip
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: Install aws-cli (Redhat based)
+    command: sudo /usr/bin/pip install awscli
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: create aws conf directory
+    file: path=/root/.aws state=directory
+
+  - name: copy RedHat / CentOS based awslogs config to the machine
+    template: src=config.j2 dest=/root/.aws/credentials
+
+  - name: copy aws-logs-agent to all servers
+    copy: src=awslogs-agent-setup.py dest=/tmp/ mode=755
+
+  - name: copy Redhat aws_config file to /tmp
+    copy: src=aws_conf_redhat dest=/tmp/aws_conf
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: copy copy Debian based awslogs config to the machine
+    copy: src=aws_conf_debian dest=/tmp/aws_conf
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: configure aws-logs-agent
+    command: /tmp/awslogs-agent-setup.py -n -r us-east-1 -c /tmp/aws_conf
+
+  - name: start service aws-logs-agent
+    service: name=awslogs state=started enabled=yes

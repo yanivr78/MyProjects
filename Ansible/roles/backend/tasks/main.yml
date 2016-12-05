@@ -1,0 +1,101 @@
+---
+
+  - include_vars: vaulted.yml
+
+    # app_certs = is appels X.509 certificates (today is being kept on GridFS ) - for sending messages to APNS
+  - name: ensure that /opt/app_certs
+    file: path=/opt/app_certs state=directory owner=tomcat group=tomcat mode=0644 recurse=yes
+
+  - name: Symlink install directory
+    file: src=/opt/apache-tomcat-7.0.34/ path=/opt/tomcat state=link
+
+  - name: Create a folder for the configuration files
+    file: path=/opt/tomcat/appoxee state=directory mode=0755
+
+  - name: Create a folder for the configuration files
+    file: path=/data/tomcat/log/ state=directory mode=755
+
+  - name: Create a folder for $CATALINA_HOME
+    file: path=/opt/tomcat/webapps/ state=directory mode=0755
+
+  - name: set /etc/hosts with the backbone
+    lineinfile: dest=/etc/hosts line='{{ item }}'
+    with_items:
+      - "{{ mysql1 }} mysql-app mysql"
+      - "{{ memcached1 }} memcache"
+      - "{{ rabbitmq1 }} rabbitmq"
+
+  - name: Delete old wars
+    file: path=/usr/share/tomcat/webapps/{{ item }}{{ version }}.war state=absent
+    with_items:
+      - appoxee##
+      - offline##
+      - analytics-webapp##
+
+  - name: Deploy Backend Version
+    command: aws s3 cp s3://apx.artifacts/Backend/{{ version }}/{{ item }}{{ version }}.war /usr/share/tomcat/webapps
+    with_items:
+      - appoxee##
+    when: (ansible_all_ipv4_addresses[0]) != '{{ backend_analytics }}'
+    tags:
+      - deployment
+
+  #- name: Deploy Backend Version
+  #  command: aws s3 cp s3://apx.artifacts/Backend/{{ version }}/{{ item }}{{ version }}.war /usr/share/tomcat/webapps
+  #    with_items:
+  #    - appoxee##
+  #  when: (ansible_all_ipv4_addresses[0]) != '{{ backend_appoxee }}'
+  #  tags:
+  #    - deployment
+
+    # Analytics webapps cannot exist with appoxee war (offline can on the other hand exist with each one of them)
+  - name: Deploy Offline and analytics Version
+    command: aws s3 cp s3://apx.artifacts/Backend/{{ version }}/{{ item }}{{ version }}.war /usr/share/tomcat/webapps
+    with_items:
+      - offline##
+      - analytics-webapp##
+    when: (ansible_all_ipv4_addresses[0]) == '{{ backend_analytics }}'
+    tags:
+      - deployment
+
+  - name: Copy config files to backend1
+    template: src={{ item.src }} dest={{ item.dest }} owner=tomcat group=tomcat mode=755
+    with_items:
+    - { src: 'saas.xml.j2', dest: '/opt/tomcat/appoxee/saas.xml' }
+    - { src: 'catalina.sh.j2', dest: '/opt/tomcat/bin/catalina.sh' }
+    when: (ansible_all_ipv4_addresses[0]) == '{{ backend_appoxee1 }}'
+    tags:
+      - config
+
+  - name: Copy config files to backend2
+    template: src={{ item.src }} dest={{ item.dest }} owner=tomcat group=tomcat mode=755
+    with_items:
+    - { src: 'saas.xml.j2', dest: '/opt/tomcat/appoxee/saas.xml' }
+    - { src: 'catalina2.sh.j2', dest: '/opt/tomcat/bin/catalina.sh' }
+    when: (ansible_all_ipv4_addresses[0]) == '{{ backend_appoxee2 }}'
+    tags:
+      - config
+
+  - name: Copy config files to backend3
+    template: src={{ item.src }} dest={{ item.dest }} owner=tomcat group=tomcat mode=755
+    with_items:
+    - { src: 'saas.xml.j2', dest: '/opt/tomcat/appoxee/saas.xml' }
+    - { src: 'catalina3.sh.j2', dest: '/opt/tomcat/bin/catalina.sh' }
+    when: (ansible_all_ipv4_addresses[0]) == '{{ backend_appoxee3 }}'
+    tags:
+      - config
+
+  - name: Copy offline config files to backend-offline/analytics
+    template: src={{ item.src }} dest={{ item.dest }} owner=tomcat group=tomcat mode=755
+    with_items:
+    - { src: 'offline.xml.j2', dest: '/opt/tomcat/appoxee/offline.xml' }
+    - { src: 'analytics.xml.j2', dest: '/opt/tomcat/analytics.xml' }
+    - { src: 'catalina_offline.sh.j2', dest: '/opt/tomcat/bin/catalina.sh' }
+    when: (ansible_all_ipv4_addresses[0]) == '{{ backend_analytics }}'
+    tags:
+      - config
+
+  - name: restart Tomcat after deployment and configuration
+    service: name=tomcat state=restarted enabled=yes
+    tags:
+      - config

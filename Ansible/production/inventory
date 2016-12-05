@@ -1,0 +1,49 @@
+[frontend1]
+10.0.2.108 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frnakfurt.pem
+
+[backend1]
+10.0.2.86 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+
+[backend2]
+10.0.2.87 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+
+[backend3]
+10.0.2.88 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+
+[backend4]
+10.0.2.89 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+
+[mysql1]
+10.0.2.42 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+
+[rabbit1]
+10.0.2.61 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+
+[memcached1]
+10.0.2.69 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/virginia.pem
+
+[mongodb]
+
+
+[mongodb-sidedb]
+
+
+
+[frontedns_all:children]
+frontend1
+
+[all_mysql:children]
+mysql1
+
+[all_rabbitmq:children]
+rabbit1
+
+[all_memcached:children]
+memcached1
+
+
+[all_backends:children]
+backend1
+backend2
+backend3
+backend4

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+  <entry key="props">db</entry>
+  <entry key="mailSender.host">email-smtp.us-east-1.amazonaws.com</entry>
+  <entry key="mailSender.port">465</entry>
+  <entry key="mailSender.user">{{ amazon_key }}</entry>
+  <entry key="mailSender.pass">{{ amazon_secret }}</entry>
+  <entry key="logger">classpath:log4j.xml</entry>
+  <entry key="jdbc.user">{{ mysql_user }}</entry>
+  <entry key="jdbc.pass">{{ mysql_pass }}</entry>
+  <entry key="jdbc.url">jdbc:mysql://mysql-app:3306/appoxee</entry>
+
+</properties>

@@ -1,0 +1,11 @@
+---
+
+mongodb_packages_dependencies:
+  - libselinux-python
+
+mongodb_packages:
+  - mongodb-org-2.6.9
+  - mongodb-org-server-2.6.9
+  - mongodb-org-shell-2.6.9
+  - mongodb-org-mongos-2.6.9
+  - mongodb-org-tools-2.6.9

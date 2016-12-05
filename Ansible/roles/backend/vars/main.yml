@@ -1,0 +1,12 @@
+---
+backend_appoxee1: 10.0.2.86
+backend_appoxee2: 10.0.2.87
+backend_appoxee3: 10.0.2.88
+backend_analytics: 10.0.2.89
+
+
+min_memory_size: 4G
+max_memory_size: 8G
+profiles1: $CATALINA_OPTS -Dcom.sun.management.jmxremote.port=7009 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dspring.profiles.active="logging,geo,s2s,send_immediate,schedule_send,schedule_s2s,send_periodic,best_time,message_template,coppa,send_multiApp,message_update,outbound,scheduling_enabled,statistics"
+profiles2: $CATALINA_OPTS -Dcom.sun.management.jmxremote.port=7009 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dspring.profiles.active="s2s,send_immediate,schedule_send,schedule_s2s,send_periodic,best_time,message_template,coppa,send_multiApp,message_update,outbound,scheduling_enabled,statistics"
+profiles3: $CATALINA_OPTS -Dcom.sun.management.jmxremote.port=7009 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dspring.profiles.active="message_open,analytics,feedback_request,device_tag,update_field,push_open,application_activate,rich,device_add,integration_events"

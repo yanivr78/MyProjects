@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties>
+  <entry key="is.query.time.out.infinite">true</entry>
+  <entry key="test.apps.iphone">99;100093;100007;100040;100044;100155;100156;100157;100158;100159;100160;100161;100162;100163;100164;100165;100166;100167;100168;100169;100170;100171</entry>
+  <entry key="test.apps.android">100005</entry>
+  <entry key="mailSender.host">email-smtp.us-east-1.amazonaws.com</entry>
+  <entry key="mailSender.port">465</entry>
+  <entry key="mailSender.user">{{ email_user }}</entry>
+  <entry key="mailSender.pass">{{ email_pass }}</entry>
+  <entry key="environment">prod</entry>
+  <entry key="reliable">false</entry>
+  <entry key="report.flag">true</entry>
+  <entry key="analytics.enabled">true</entry>
+  <entry key="logger">classpath:log4j.xml</entry>
+  <entry key="analytics.includeV1">true</entry>
+  <entry key="jdbc.user">{{ mysql_user }}</entry>
+  <entry key="jdbc.pass">{{ mysql_pass }}</entry>
+  <entry key="sideMongo.host">localhost</entry>
+  <entry key="sideMongo.port">27017</entry>
+  <entry key="sideMongo.db.name">appbox</entry>
+  <entry key="sideMongo.connectionsPerHost">100</entry>
+  <entry key="sideMongo.threadsAllowedToBlockForConnectionMultiplier">100</entry>
+  <entry key="sideMongo.connectTimeout">5000</entry>
+  <entry key="sideMongo.maxWaitTime">5000</entry>
+  <entry key="sideMongo.socketTimeout">0</entry>
+  <entry key="mongo.host">localhost</entry>
+  <entry key="mongo.port">27017</entry>
+  <entry key="mongo.db.name">appbox</entry>
+  <entry key="mongo.connectionsPerHost">100</entry>
+  <entry key="mongo.threadsAllowedToBlockForConnectionMultiplier">100</entry>
+  <entry key="mongo.connectTimeout">5000</entry>
+  <entry key="mongo.maxWaitTime">5000</entry>
+  <entry key="mongo.socketTimeout">0</entry>
+  <entry key="feedbacks.mongo">false</entry>
+  <entry key="quartz.analytics.url">jdbc:mysql://mysql-quartz:3306/analytics_quartz</entry>
+  <entry key="quartz.analytics.user">{{ mysql_user }}</entry>
+  <entry key="quartz.analytics.pass">{{ mysql_pass }}</entry>
+  <entry key="quartz.analytics.threadCount">60</entry>
+  <entry key="quartz.analytics.maxConnections">80</entry>
+  <entry key="quartz.analytics.clusterCheckinInterval">99990000</entry>
+  <entry key="rabbit.user">{{ rabbit_user }}</entry>
+  <entry key="rabbit.pass">{{ rabbit_pass }}</entry>
+  <entry key="rabbit.host">rabbitmq</entry>
+  <entry key="rabbit.port">5672</entry>
+  <entry key="rabbit.vhost">api</entry>
+  <entry key="rabbit.adrs">rabbitmq:5672</entry>
+  <entry key="rabbit.job.update.consumers">1</entry>
+  <entry key="rabbit.job.run.consumers">5</entry>
+  <entry key="rabbit.job.stop.consumers">1</entry>
+  <entry key="jdbc.url">jdbc:mysql://mysql-app:3306/appoxee</entry>
+  <entry key="http.connection.timeout">10</entry>
+
+</properties>

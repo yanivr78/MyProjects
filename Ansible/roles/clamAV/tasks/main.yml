@@ -1,0 +1,14 @@
+---
+
+- name: Install Clamav packages
+  yum: pkg="{{ item }}" state=latest
+  with_items:
+    - clamav
+    - clamav-update
+
+# Removed when clause 'when: clamav_install|changed' due to Ansible bug https://github.com/ansible/ansible/issues/7432
+- name: Remove example from clamav-update config
+  lineinfile: dest=/etc/freshclam.conf state=absent regexp="Example"
+
+- name: create cron daily updates for freshclam
+  cron: name="Update freshclam engine" day="*" hour="23" minute="0"  job="/usr/bin/freshclam > /var/log/freshclam.log" 

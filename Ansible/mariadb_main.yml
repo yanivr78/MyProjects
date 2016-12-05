@@ -1,0 +1,11 @@
+---
+# This playbook installes NGINX, PHP-FPM , and deploy the required build
+
+- name: MariaDB installation role
+  hosts: all_mariadb
+  become: yes
+  roles:
+     - common
+    # - java
+    # - tomcat7
+     - mariadb

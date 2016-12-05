@@ -1,0 +1,134 @@
+---
+  - include_vars: vaulted.yml
+    tags: test
+
+  - name: delete old nginx folder
+    file: path=/etc/nginx/ state=absent
+
+  - name: setup nginx stable repo
+    copy: src=nginx.repo dest=/etc/yum.repos.d/
+
+  - name: Install General Required Packages
+    yum: name={{ item }} state=installed
+    with_items:
+    - php-fpm
+    - php
+    - nginx
+    - php-pear
+    - php-devel
+    - php-mysql
+    - librabbitmq-devel
+    - gcc
+    - GeoIP-devel
+    - php-pear
+    - php-pecl-geoip
+
+  - name: Install General Required Packages
+    yum: name={{ item }} state=installed
+    with_items:
+    - automake
+    - fuse
+    - fuse-devel
+    - gcc-c++
+    - git
+    - libcurl-devel
+    - libxml2-devel
+    - make
+    - openssl-devel
+    tags:
+      - test
+  - name: place S3FS in fstab (Dont forget to install s3fs manually by yourself !)
+    lineinfile: dest=/etc/fstab line="s3fs#apx.uploads.int /data fuse _netdev,allow_other 0 0"
+
+
+  - name: place 2nd line for S3FS
+    lineinfile: dest=/etc/fstab line="/data/uploads /var/www/webapps/appoxee2.0/apps/frontend/public/uploads bind defaults,bind   0   0"
+
+
+  - name: copy s3fs credentials file into /etc/passwd-s3fs
+    template: src=passwd-s3fs.j2 dest=/etc/passwd-s3fs mode=600
+    tags:
+      - test
+
+  - name: create /data for s3fs
+    file:  path=/data state=directory mode=755
+    tags:
+      - test
+
+  - name: Install PECL libaries.
+    shell: "yes \"\" | pecl install {{ item }}"
+    register: pecl_result
+    changed_when: "pecl_result.rc == 0"
+    failed_when: "not (('already installed' in pecl_result.stdout) or ('install ok:' in pecl_result.stdout))"
+    with_items:
+    - memcache
+    - amqp-1.0.9
+    - mongo
+
+  - name: add all modules to php.ini
+    lineinfile: dest=/etc/php.ini line=extension={{ item }}
+    with_items:
+      - memcache.so
+      - amqp.so
+      - mongo.so
+      - geoip.so
+      # - opcache.so
+
+
+  - name: add NGINX group
+    group: name=nginx state=present
+
+  - name: Add an NGINX user within nginx group
+    user: name=nginx groups=nginx state=present
+
+  - name: Ensure that extract directory exists
+    file: path={{ item }} state=directory mode=0755
+    with_items:
+    - /var/www/webapps/
+    - /etc/appoxee/
+
+  - name: Update all NGINX configuration files
+    unarchive: src=nginx.tar.gz dest=/etc/
+
+  - name: Copy www.conf file to /etc/php-fpm.d/
+    copy: src={{ item.src }} dest={{ item.dest }} owner={{ item.user }} group={{ item.group }} mode={{ item.chmod }}
+    with_items:
+    - { src: 'www.conf', dest: '/etc/php-fpm.d/', user: 'apache', group: 'apache', chmod: '0644' }
+
+  - name: fix php-fpm folder permissions
+    file: path=/var/log/php-fpm owner=apache group=apache mode=755
+
+  - name: Cleanup old tar from /tmp/ folder
+    command: rm -rf /tmp/Frontend-{{ version }}.tar.gz
+
+  - name: Copy the tar file from S3
+    command: aws s3 cp s3://apx.artifacts/Frontend/{{ version }}/Frontend-{{ version }}.tar.gz /tmp
+
+  - name: Extract the tar into {{ fe_path }}
+    unarchive: src=/tmp/Frontend-{{ version }}.tar.gz
+               dest={{ fe_path }}
+               copy=no
+
+  #- name: softlink system config (default higher level config folder) to /etc/appoxee
+  #  file: src=/var/www/webapps/appoxee2.0/appoxee/core/config/  path=/etc/appoxee state=link force=yes
+
+  - name: softlink system config (to fix the bug that kohana cannot go outside of his folder) to /etc/appoxee
+    file: src=/etc/appoxee  path=/var/www/webapps/appoxee2.0/appoxee/core/config/system  state=link force=yes
+
+
+  - name: copy configuration files to /etc/appoxee
+    template: src={{ item.src }} dest={{ item.dest }} owner=apache group=apache mode=0644
+    with_items:
+      - { src: 'cache.php.j2', dest: '/etc/appoxee/cache.php' }
+      - { src: 'database.php.j2', dest: '/etc/appoxee/database.php' }
+      - { src: 'mongo.php.j2', dest: '/etc/appoxee/mongo.php' }
+      - { src: 'rabbitmq.php.j2', dest: '/etc/appoxee/rabbitmq.php' }
+      - { src: 'email.php.j2', dest: '/etc/appoxee/email.php' }
+    notify:
+      - restart web services
+
+#  - name: NGINX failed to restart, forcfuelly shutting it down
+#    command: /bin/sudo /usr/sbin/fuser -k 80/tcp | /bin/sudo /usr/sbin/fuser -k 80/tcp | /bin/sudo /usr/sbin/fuser -k 80/tcp | /bin/sudo /usr/sbin/fuser -k 80/tcp | /bin/sudo /usr/sbin/fuser -k 80/tcp | /bin/sudo systemctl restart nginx
+#    when: "'failed' in result.stderr"
+#    notify:
+#      - restart web services

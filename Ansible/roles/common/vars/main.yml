@@ -1,0 +1,10 @@
+# Variables for role
+
+# Here are variables related to the Tomcat installation
+
+src_tomcat_path: "/opt/apache-tomcat-7.0.34"
+src_tomcat_file: "apache-tomcat-7.0.34.tar.gz"
+src_tomcat: "{{ src_tomcat_path }}{{ src_tomcat_file }}"
+
+http_port: 8080
+https_port: 8443

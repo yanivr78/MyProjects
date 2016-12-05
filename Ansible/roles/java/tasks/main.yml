@@ -1,0 +1,61 @@
+---
+# Prerequists for ubuntu/debian
+
+  - name: Install add-apt-repostory
+    apt: name=software-properties-common state=latest
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: Add Oracle Java Repository
+    apt_repository: repo='ppa:webupd8team/java'
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: Accept Java 8 Licence
+    shell: echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | tee /etc/oracle-java-8-licence-acceptance | /usr/bin/debconf-set-selections
+    args:
+      creates: /etc/oracle-java-8-licence-acceptance
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: Install Oracle Java 8
+    apt: name={{item}} state=latest
+    with_items:
+      - wget
+      - oracle-java8-installer
+      - ca-certificates
+      - oracle-java8-set-default
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+
+# Prerequists for CentOS
+
+  - name: Install wget on CentOS
+    yum: name=wget state=latest
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Amazon'
+
+  - name: Download Java
+    command: "wget -q -O {{java_archive}} --no-check-certificate --no-cookies --header 'Cookie: oraclelicense=accept-securebackup-cookie' {{download_url}} creates={{java_archive}}"
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Amazon'
+
+  - name: Unpack archive
+    command: "tar -zxf {{java_archive}} -C {{download_folder}} creates={{java_name}}"
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Amazon'
+
+  - name: Fix ownership
+    file: state=directory path={{java_name}} owner=root group=root recurse=yes
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Amazon'
+
+  - name: Make Java available for system
+    command: 'alternatives --install "/usr/bin/java" "java" "{{java_name}}/bin/java" 2000'
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Amazon'
+
+  - name: Clean up
+    file: state=absent path={{java_archive}}
+
+# Setting default java 8
+
+  - name: Correct java version selected for a CentOS based OS
+    alternatives: name=java path=/opt/jdk1.8.0_60/bin/java
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'Amazon'
+
+  - name: Set Java 8 as default for a Debian based OS
+    alternatives: name=java path=/opt/jdk1.8.0_60/bin/java
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'

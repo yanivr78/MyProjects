@@ -1,0 +1,7 @@
+# Variables for role
+
+# deployment vars
+fe_path: /var/www/webapps/
+deploy_dir: /var/www/appoxee
+
+failed_cmd: /bin/sudo /usr/sbin/fuser -k 80/tcp | /bin/sudo /usr/sbin/fuser -k 80/tcp | /bin/sudo /usr/sbin/fuser -k 80/tcp | /bin/sudo /usr/sbin/fuser -k 80/tcp | /bin/sudo /usr/sbin/fuser -k 80/tcp | /bin/sudo systemctl restart nginx

@@ -1,0 +1,44 @@
+global
+   log 127.0.0.1   local0
+   log 127.0.0.1   local1 notice
+   #log loghost    local0 info
+   maxconn 4096
+   #debug
+   #quiet
+   user haproxy
+   group haproxy
+   stats socket /run/haproxy-info.sock  mode 666 level user
+
+defaults
+   log     global
+   mode    http
+   retries 3
+   timeout client 50s
+   timeout connect 5s
+   timeout server 50s
+   option log-separate-errors
+   option dontlognull
+   option httplog
+   option redispatch
+   balance  roundrobin
+
+# Set up application listeners here.
+
+listen admin
+   bind 127.0.0.1:22002
+   mode http
+   stats uri /
+
+
+frontend http
+   maxconn 2000
+   bind 0.0.0.0:80
+   capture request header host len 50
+   capture request header x_key len 50
+   capture request header x_username len 50
+
+
+backend servers-http
+
+   server {{ ha_dst_name }} {{ ha_dst }}:80 weight 1 maxconn 20000 check
+   server secondary {{ ha_backup_dst }}:80 weight 1 maxconn 20000 check backup

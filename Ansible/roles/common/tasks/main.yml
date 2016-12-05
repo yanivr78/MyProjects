@@ -1,0 +1,78 @@
+---
+
+  - include_vars: vaulted.yml
+
+  - name: Disable SELinux
+    selinux: state=disabled
+    register: SElinux
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+
+  - name: make rc.local executable
+    command: sudo chmod u+x /etc/rc.d/rc.local
+
+  - name: Install epel-release # this must be installed seperetly (before the below !!!)
+    yum: name=epel-release state=installed
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: Install General Required Packages
+    yum: name={{ item }} state=installed
+    with_items:
+    - python
+    - python-pip
+    - vim
+    - ntp
+    - psmisc
+    - telnet
+    - tcpdump
+    - wget
+    - traceroute
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: install aws-cli (redhat based)
+    command: sudo pip install awscli
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: install aws-cli (debian based)
+    apt: name=awscli state=present
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: Install General Required Packages
+    yum: name={{ item }} state=installed
+    with_items:
+    - python
+    - python-pip
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: create aws conf directory redhat
+    file: path=/root/.aws state=directory
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: create aws conf directory ubuntu
+    file: path=/home/ubuntu/.aws state=directory
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: copy aws keys to the machine (redhat)
+    template: src=config.j2 dest=/root/.aws/credentials
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: copy aws keys to the machine (ubuntu)
+    template: src=config.j2 dest=/home/ubuntu/.aws/config
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: copy aws-logs-agent to all servers
+    copy: src=awslogs-agent-setup.py dest=/tmp/ mode=755
+
+  - name: copy Redhat aws_config file to /tmp
+    copy: src=aws_conf_redhat dest=/tmp/aws_conf
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+  - name: copy Debian based awslogs config to the machine
+    copy: src=aws_conf_debian dest=/tmp/aws_conf
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - name: configure aws-logs-agent
+    command: /tmp/awslogs-agent-setup.py -n -r us-east-1 -c /tmp/aws_conf
+
+  - name: start service aws-logs-agent
+    service: name=awslogs state=started enabled=yes

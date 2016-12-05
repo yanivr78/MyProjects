@@ -1,0 +1,5 @@
+# Variables for role
+mysql_master: 10.0.103.61
+mysql_slave1: 10.0.103.46
+mysql_slave2: 10.0.103.47
+# Here are variables related to the Tomcat installation
