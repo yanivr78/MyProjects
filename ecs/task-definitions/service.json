@@ -1,0 +1,30 @@
+[
+    {
+        "name": "hydra-core",
+        "image": "518308533929.dkr.ecr.us-east-1.amazonaws.com/ebtest:1.0",
+        "cpu": 1,
+        "memory": 512,
+        "links": [],
+        "portMappings": [
+            {
+                "containerPort": 8080,
+                "hostPort": 8080,
+                "protocol": "tcp"
+            }
+        ],
+        "essential": true,
+        "entryPoint": [],
+        "command": [],
+        "environment": [],
+        "mountPoints": [],
+        "volumesFrom": [],
+        "logConfiguration": {
+          "logDriver": "awslogs",
+            "options": {
+                        "awslogs-group": "ECS",
+                        "awslogs-region": "us-east-1",
+                        "awslogs-stream-prefix": "Docker_Container"
+            }
+          }
+        }
+]

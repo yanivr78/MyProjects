@@ -1,0 +1,15 @@
+variable "iam_role" { default = "ecs-policy" }
+variable "ecs_ami" { default = "ami-04351e12" }
+variable "ecs_instance_type" { default = "t2.medium" }
+variable "aws_region" { default = "us-east-1" }
+variable "ecs_key_name" { default = "deadpool" }
+variable "sg_cidr_block" {default = "10.230.36.0/22" }
+variable "ecs_cluster_name" { default = "hydra-default" }
+variable "aws_subnet" { default = "subnet-d4c8a3f9" }
+variable "availability_zones" { default = "us-east-1" }
+variable "tag_creator_name" { default = "Yaniv Ron" }
+variable "tag_department"  { default = "EDP" }
+variable "tag_environment"  { default = "QA" }
+variable "tag_name"	 { default = "ECS_For_Hydra" }
+variable "tag_team_name"  { default = "Deadpool" }
+variable "vpc_id" { default = "vpc-b3bd0ad5" } 
