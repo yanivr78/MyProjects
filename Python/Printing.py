@@ -30,3 +30,11 @@ print(len(input("What is your name?")))
 
 # Subscripting (Print only a portion of a string)
 print("hello"[4])
+
+#F-String
+# Since print() doesn't allow to print different datatypes, you can either convert them to be of the same type
+# Or use the F-string as so :
+score = 0
+height = 1.8
+isWinning = True
+print(f"Your score is {score}, your height is {height}, did you win? {isWinning}")
