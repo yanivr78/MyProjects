@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f09c9603-77e1-4bf3-85ed-fcc9341befb5" name="Changes" comment="Added Variables and Math Arithmetics">
+    <list default="true" id="f09c9603-77e1-4bf3-85ed-fcc9341befb5" name="Changes" comment="Added more examples">
+      <change afterPath="$PROJECT_DIR$/Python/Control Flows.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/Math_Operations.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Math_Operations.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/Printing.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Printing.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +45,7 @@
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="Printing" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Printing" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="MyProjects" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -67,11 +66,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Python.Printing" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -89,7 +83,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654282285345</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added more examples">
+      <created>1654300784737</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1654300784737</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -105,6 +106,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added Variables and Math Arithmetics" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Variables and Math Arithmetics" />
+    <MESSAGE value="Added more examples" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added more examples" />
   </component>
 </project>
