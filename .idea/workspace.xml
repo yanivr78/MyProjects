@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f09c9603-77e1-4bf3-85ed-fcc9341befb5" name="Changes" comment="Added Nested_lists.py">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python/Nested_lists.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Nested_lists.py" afterDir="false" />
-    </list>
+    <list default="true" id="f09c9603-77e1-4bf3-85ed-fcc9341befb5" name="Changes" comment="Added two-dimensional list game within Nested_lists.py" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -246,7 +243,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654568441353</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added two-dimensional list game within Nested_lists.py">
+      <created>1654575239887</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1654575239887</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -267,6 +271,7 @@
     <MESSAGE value="Added more context to Control_Flows.py" />
     <MESSAGE value="Added lists and random (from lists)" />
     <MESSAGE value="Added Nested_lists.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Nested_lists.py" />
+    <MESSAGE value="Added two-dimensional list game within Nested_lists.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added two-dimensional list game within Nested_lists.py" />
   </component>
 </project>
