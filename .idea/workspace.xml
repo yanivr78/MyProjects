@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f09c9603-77e1-4bf3-85ed-fcc9341befb5" name="Changes" comment="Added more context to Control_Flows.py">
-      <change afterPath="$PROJECT_DIR$/Python/lists.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Python/random_module.py" afterDir="false" />
+    <list default="true" id="f09c9603-77e1-4bf3-85ed-fcc9341befb5" name="Changes" comment="Added Nested_lists.py">
+      <change afterPath="$PROJECT_DIR$/Python/Nested_lists.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -211,7 +210,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654473049229</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added lists and random (from lists)">
+      <created>1654567074643</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1654567074643</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -230,6 +236,8 @@
     <MESSAGE value="Added more examples" />
     <MESSAGE value="Added more context + Created Leap_Year.py" />
     <MESSAGE value="Added more context to Control_Flows.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added more context to Control_Flows.py" />
+    <MESSAGE value="Added lists and random (from lists)" />
+    <MESSAGE value="Added Nested_lists.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Nested_lists.py" />
   </component>
 </project>
