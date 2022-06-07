@@ -41,7 +41,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.Nested_lists">
+  <component name="RunManager" selected="Python.Nested_Lists+Random_Rock_Paper_Scissors_Game">
     <configuration name="Control Flows" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MyProjects" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -63,7 +63,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Leap_Year" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Nested_Lists+Random_Rock_Paper_Scissors_Game" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MyProjects" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -75,7 +75,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Python/Leap_Year.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Python/Nested_Lists+Random_Rock_Paper_Scissors_Game.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -170,11 +170,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Nested_Lists+Random_Rock_Paper_Scissors_Game" />
         <item itemvalue="Python.Nested_lists" />
         <item itemvalue="Python.random_module" />
         <item itemvalue="Python.lists" />
         <item itemvalue="Python.Control Flows" />
-        <item itemvalue="Python.Leap_Year" />
       </list>
     </recent_temporary>
   </component>
@@ -250,7 +250,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654575239887</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Added two-dimensional list game within Nested_lists.py">
+      <created>1654575595069</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1654575595069</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
