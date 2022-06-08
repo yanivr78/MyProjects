@@ -29,3 +29,8 @@ print(score)
 
 #Round numbers
 print(round(8 / 3, 2)) # 8 / 3 and then round to two decimal places (2.67 instead of 2.666666666)
+
+# Modulo
+# if a number is evenly divided by 2 (i.e. no reminder) it is an even number :
+# number % 2 = 0 (no remainder means even)
+# number % 2 = 1 (remainder = odd number)
