@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f09c9603-77e1-4bf3-85ed-fcc9341befb5" name="Changes" comment="Loops.py">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks" beforeDir="false" afterPath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks/04-Terraform-Variables-and-Datasources/terraform-manifests/c6-outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks/04-Terraform-Variables-and-Datasources/terraform-manifests/c6-outputs.tf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
