@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f09c9603-77e1-4bf3-85ed-fcc9341befb5" name="Changes" comment="Loops.py">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks" beforeDir="false" afterPath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks/04-Terraform-Variables-and-Datasources/terraform-manifests/c2-variables.tf" beforeDir="false" afterPath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks/04-Terraform-Variables-and-Datasources/terraform-manifests/c2-variables.tf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks/04-Terraform-Variables-and-Datasources/terraform-manifests/c5-ec2instance.tf" beforeDir="false" afterPath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks/04-Terraform-Variables-and-Datasources/terraform-manifests/c5-ec2instance.tf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks/04-Terraform-Variables-and-Datasources/terraform-manifests/c6-outputs.tf" beforeDir="false" afterPath="$PROJECT_DIR$/Terraform/terraform-on-aws-eks/04-Terraform-Variables-and-Datasources/terraform-manifests/c6-outputs.tf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
