@@ -1,9 +1,8 @@
 [frontends]
-10.0.103.56 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/virginia.pem
+198.51.100.10 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/example-staging.pem
 
 [backends]
-#10.0.103.46 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/virginia.pem
-10.0.2.132 ansible_ssh_user=root ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+198.51.100.20 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/example-staging.pem
 
 [haproxy]
-10.0.14.228 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/virginia.pem
+198.51.100.30 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/example-staging.pem

@@ -1,3 +1,4 @@
 #!/bin/bash
-echo "nameserver 10.230.36.2" >> /etc/resolv.conf
+set -euo pipefail
+apt-get update -y
 apt-get -y install nginx

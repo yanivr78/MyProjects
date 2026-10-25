@@ -1,35 +1,32 @@
 [frontend1]
-10.0.2.108 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frnakfurt.pem
+192.0.2.10 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/example-prod.pem
 
 [backend1]
-10.0.2.86 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+192.0.2.21 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/example-prod.pem
 
 [backend2]
-10.0.2.87 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+192.0.2.22 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/example-prod.pem
 
 [backend3]
-10.0.2.88 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+192.0.2.23 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/example-prod.pem
 
 [backend4]
-10.0.2.89 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+192.0.2.24 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/example-prod.pem
 
 [mysql1]
-10.0.2.42 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+192.0.2.30 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/example-prod.pem
 
 [rabbit1]
-10.0.2.61 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/frankfurt.pem
+192.0.2.40 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/example-prod.pem
 
 [memcached1]
-10.0.2.69 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/virginia.pem
+192.0.2.50 ansible_ssh_user=centos ansible_ssh_private_key_file=~/.ssh/example-prod.pem
 
 [mongodb]
 
-
 [mongodb-sidedb]
 
-
-
-[frontedns_all:children]
+[frontends_all:children]
 frontend1
 
 [all_mysql:children]
@@ -40,7 +37,6 @@ rabbit1
 
 [all_memcached:children]
 memcached1
-
 
 [all_backends:children]
 backend1
